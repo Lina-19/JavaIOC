@@ -7,18 +7,21 @@ import lombok.*;
 public class Credit {
     private Long id;
     private Double capilate_Emprunt;
-    private Integer nombfre_mois;
+    private Integer nombre_mois;
     private Double taux_max;
-    private String nom_Demandeur;
+    private Client Demandeur;
     private Double mensualite;
 
-    public Credit(long l, double v, int i, double v1, String nom, double v2) {
-        this.id=l;
-        this.capilate_Emprunt=v;
-        this.nombfre_mois=i;
-        this.taux_max=v1;
-        this.nom_Demandeur=nom;
-        this.mensualite=v2;
+
+
+
+    public Credit(long id, double capilateEmprunt, int nombfreMois, double tauxMax,Client demandeur, double mensualite) {
+        this.setId(id);
+        this.setCapilate_Emprunt(capilateEmprunt);
+        this.setNombre_mois(nombfreMois);
+        this.setTaux_max(tauxMax);
+        this.setDemandeur(demandeur);
+        this.setMensualite(mensualite);
     }
 
     public void setMensualite(Double mensualite) {
@@ -42,18 +45,18 @@ public class Credit {
     }
 
     public Integer getNombfre_mois() {
-        return nombfre_mois;
+        return nombre_mois;
     }
 
-    public String getNom_Demandeur() {
-        return nom_Demandeur;
+    public Client getNom_Demandeur() {
+        return Demandeur;
     }
 
     @Override
     public String toString() {
         var creditstr="===================================================\n";
         creditstr+="=> Credit n° "+getId()+"                              \n";
-        creditstr+="=> Nom de demandeur : "+getNom_Demandeur()+"          \n";
+        creditstr+="=> Nom de demandeur : "+getNom_Demandeur().nomComplet()+"          \n";
         creditstr+="------------------------------------------------------\n";
         creditstr+="=> Capitale Emprunte     : "+getCapilate_Emprunt()+"   \n";
         creditstr+="=> Nombre de mois           :"+getNombfre_mois()+"    \n";
