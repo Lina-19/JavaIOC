@@ -19,7 +19,7 @@ public class ApprocheJDBC {
                 Driver="com.mysql.cj.jdbc.Driver";
         Connection connection=null;
         PreparedStatement statement=null;
-        ResultSet resultSet=null;
+        ResultSet rs=null;
         ArrayList credits=new ArrayList<Credit>();
         ArrayList clients =new ArrayList<Client>();
 
@@ -33,14 +33,20 @@ public class ApprocheJDBC {
 //            statement= connection.prepareStatement("SELECT * from Credit where id=? ");
 //            statement.setLong(1,2L);
             statement= connection.prepareStatement("SELECT * from credit");
-           resultSet= statement.executeQuery();
-           while (resultSet.next()){
-              var id = resultSet.getLong("id");
-              var capilate_Emprunt=resultSet.getDouble("capilate");
-              var nombfre_mois=resultSet.getInt("nbrMois");
-              var taux_max=resultSet.getDouble("taux") ;
-              var Demandeur=resultSet.getLong("demandeur");
-              var mensualite=resultSet.getDouble("mensualite");
+           rs= statement.executeQuery();
+           while (rs.next()){
+              var id = rs.getLong("id");
+              var capital=rs.getDouble("capitale");
+              var nbrMois=rs.getInt("nbrMois");
+              var taux=rs.getDouble("taux") ;
+              var Demandeur=rs.getLong("demandeur");
+               var nomdemandeur=rs.getString("nom");
+               var prenomdemandeur=rs.getString("prenom");
+               var mensualite=rs.getDouble("mensualite");
+
+               var client=new Client();
+               client.nomComplet(nomdemandeur,prenomdemandeur);
+               credits.add(new Credit(id,capital,nbrMois,taux,client,mensualite));
 
 
 

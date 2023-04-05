@@ -1,34 +1,25 @@
 package dao;
 
-import model.Client;
-import model.Credit;
-import model.Role;
-import model.Sexe;
-
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class ClientDao implements IDao<Client,Long>{
-
+public class UtilisateurDao implements IDao<UtilisateurDao,Long>{
     @Override
-    public Client trouverParId(Long aLong) {
+    public UtilisateurDao trouverParId(Long aLong) {
         return null;
     }
 
     @Override
-    public List<Client> findAll() {
+    public List<UtilisateurDao> findAll() {
         return null;
     }
 
     @Override
-    public Client save() {
+    public UtilisateurDao save() {
         return null;
     }
 
     @Override
-    public Client update() {
+    public UtilisateurDao update() {
         return null;
     }
 

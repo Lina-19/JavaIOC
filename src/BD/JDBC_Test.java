@@ -1,5 +1,6 @@
 package BD;
 
+import metier.Singleton;
 import model.Client;
 import model.Credit;
 
@@ -26,7 +27,7 @@ public class JDBC_Test {
 //        }
 
 
-        Connection connection=null;
+        Connection connection= Singleton.getSession();
         var credits =new ArrayList<Credit>();
         try {
         ClassLoader cl =Thread.currentThread().getContextClassLoader();
@@ -43,14 +44,20 @@ public class JDBC_Test {
             connection=DriverManager.getConnection(url,user,pass);
             System.out.println("Connexion etablit avec succès");
 
-//Creation du statement et du ResultSet
-            var statement= connection.createStatement();
-            var rs=statement.executeQuery(
+            var ps=connection.prepareStatement(
+                    "select * from credit cr,client cl,utilisateur u"
 
-                    "select cr.id, cr.capital, cr.nbrMois, cr.taux, cr.demandeur, cr.mensualite, u.nom, u.prenom " +
-                            "FROM credits cr, client cl, utilisateur u " +
-                            "WHERE cr.demandeur=cl.id AND cl.id=u.id AND cr.capital='3000'"
             );
+            var rs=ps.executeQuery();
+
+//Creation du statement et du ResultSet
+//            var statement= connection.createStatement();
+//            var rs=statement.executeQuery(
+//                    "select cr.id, cr.capital, cr.nbrMois, cr.taux, cr.demandeur, cr.mensualite, u.nom, u.prenom " +
+//                            "FROM credit cr, client cl, utilisateur u "
+//
+//            );
+
             while (rs.next()){
                 var id=rs.getLong("id");
                 var capital =rs.getDouble("capital");
@@ -71,19 +78,10 @@ public class JDBC_Test {
         } catch (IOException e) {
            e.printStackTrace();
         } catch (SQLException e) {
-            System.err.println("Connexion échoué");
+            e.printStackTrace();
+//            System.err.println("Connexion échoué");
         }
-        finally {
-            if(connection!=null){
-                try {
-                    connection.close();
-                    System.out.println("Fermeture de session avec succès");
-                } catch (SQLException e) {
-                    System.err.println("Fermeture de session échoué");
-                }
-
-            }
-        }
+      Singleton.closeSession();
 
 
     }

@@ -12,7 +12,7 @@ public class Singleton {
     private Singleton(){
         try{
             ClassLoader cl=Thread.currentThread().getContextClassLoader();
-            var config=cl.getResourceAsStream("application.propeties");
+            var config=cl.getResourceAsStream("application.properties");
             if(config==null) throw new IOException("Fichier introuvable");
             Properties propertiesFile=new Properties();
             propertiesFile.load(config);
@@ -43,7 +43,7 @@ public class Singleton {
                 System.out.println("Fermeture de session avec succès");
 
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                System.err.println("Fermeture de session echoué");
             }
         }
     }
