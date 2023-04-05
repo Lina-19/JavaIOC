@@ -86,22 +86,112 @@ MySqlSessionFactory factory;
 
     @Override
     public List<Credit> findAll() {
-        return null;
+        List<Credit> credits = null;
+        Connection session = factory.getSession();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String SQL = "SELECT * FROM credit";
+
+        try {
+            ps = Utilitaire.initPS(session, SQL, false);
+            rs = ps.executeQuery();
+            if(rs.next()) credits.add(map(rs));
+            System.out.println("[SQL] : " + SQL);
+            return credits;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            Utilitaire.close(ps, rs);
+        }
+        return credits;
     }
 
     @Override
-    public Credit save() {
-        return null;
+    public Credit save(Credit credit) {
+
+        Connection session = factory.getSession();
+        PreparedStatement ps = null;
+
+        String SQL = "INSERT INTO credit(capital, nbrMois, taux, demandeur, mensualite VALUES (?,?,?,?,?)";
+        try {
+
+            ps = Utilitaire.initPS(session,SQL,true,credit.getCapilate_Emprunt(),credit.getNombre_mois(),credit.getTaux_max(),
+                    credit.getDemandeur().getId(), credit.getMensualite());
+
+            var statut = ps.executeUpdate();
+            if(statut == 0) System.out.println("0 Crédit inséré");
+            else
+            {
+                var rs = ps.getGeneratedKeys();
+                var id = rs.getLong(1);
+                credit.setId(id);
+            }
+            System.out.println("[SQL] : " + SQL);
+            return credit;
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            Utilitaire.close(ps);
+        }
+
+        return credit;
     }
 
     @Override
-    public Credit update() {
-        return null;
+    public Credit update(Credit credit) {
+        Connection session = factory.getSession();
+        PreparedStatement ps = null;
+
+        String SQL = "UPDATE credit set capital = ?, nbrMois = ?, taux = ?, demandeur = ?, mensualite = ? WHERE id = ?";
+        try {
+
+            ps = Utilitaire.initPS(session,SQL,true,credit.getCapilate_Emprunt(),credit.getNombre_mois(),credit.getTaux_max(),
+                    credit.getDemandeur().getId(), credit.getMensualite());
+
+            var statut = ps.executeUpdate();
+            if(statut == 0) System.out.println("0 Crédit modifié !");
+            System.out.println("[SQL] : " + SQL);
+            return credit;
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            Utilitaire.close(ps);
+        }
+        return credit;
     }
 
     @Override
-    public Boolean delete() {
-        return null;
+    public Boolean delete(Credit credit) {
+        Connection session = factory.getSession();
+        PreparedStatement ps = null;
+
+        String SQL = "DELETE FROM creditr WHERE id = ?";
+        try {
+
+            ps = Utilitaire.initPS(session,SQL,true,credit.getId());
+
+            var statut = ps.executeUpdate();
+            if(statut == 0) System.out.println("0 Crédit supprimé");
+
+            System.out.println("[SQL] : " + SQL);
+            return true;
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            Utilitaire.close(ps);
+        }
+        return true;
     }
 
     @Override

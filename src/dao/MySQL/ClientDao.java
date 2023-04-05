@@ -1,5 +1,6 @@
-package dao;
+package dao.MySQL;
 
+import dao.IDao;
 import model.Client;
 import model.Credit;
 import model.Role;
@@ -10,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ClientDao implements IDao<Client,Long>{
+public class ClientDao implements IDao<Client,Long> {
 
     @Override
     public Client trouverParId(Long aLong) {
@@ -23,17 +24,17 @@ public class ClientDao implements IDao<Client,Long>{
     }
 
     @Override
-    public Client save() {
+    public Client save(Client client) {
         return null;
     }
 
     @Override
-    public Client update() {
+    public Client update(Client client) {
         return null;
     }
 
     @Override
-    public Boolean delete() {
+    public Boolean delete(Client client) {
         return null;
     }
 

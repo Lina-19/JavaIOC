@@ -1,8 +1,10 @@
-package dao;
+package dao.MySQL;
+
+import dao.IDao;
 
 import java.util.List;
 
-public class UtilisateurDao implements IDao<UtilisateurDao,Long>{
+public class UtilisateurDao implements IDao<UtilisateurDao,Long> {
     @Override
     public UtilisateurDao trouverParId(Long aLong) {
         return null;
@@ -14,17 +16,17 @@ public class UtilisateurDao implements IDao<UtilisateurDao,Long>{
     }
 
     @Override
-    public UtilisateurDao save() {
+    public UtilisateurDao save(UtilisateurDao user) {
         return null;
     }
 
     @Override
-    public UtilisateurDao update() {
+    public UtilisateurDao update(UtilisateurDao user) {
         return null;
     }
 
     @Override
-    public Boolean delete() {
+    public Boolean delete(UtilisateurDao user) {
         return null;
     }
 

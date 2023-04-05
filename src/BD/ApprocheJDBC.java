@@ -1,7 +1,5 @@
 package BD;
 
-import dao.ClientDao;
-import dao.CreditDao;
 import lombok.Data;
 import model.Client;
 import model.Credit;
